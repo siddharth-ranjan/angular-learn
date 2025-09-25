@@ -1,0 +1,43 @@
+<div class="todo-container">
+
+  <header>
+    <h1>{{ title() }}</h1>
+    <p class="stats">Completed {{ completedCount }} out of {{ totalCount }} tasks.</p>
+  </header>
+
+  <div class="add-task">
+    <input
+      type="text"
+      placeholder="Add a new task..."
+      [(ngModel)]="newTaskText"
+      (keyup.enter)="addTask()"
+      class="task-input"
+    >
+    <button (click)="addTask()" class="add-btn" [disabled]="!newTaskText().trim()">
+      Add task
+    </button>
+  </div>
+
+  <div class="task-list">
+    @if (tasks().length === 0) {
+      <p class="empty-state">No tasks yet. Add one above!</p>
+    } @else {
+      @for (task of tasks(); track task.id) {
+        <div class="task-item" [class.completed]="task.completed">
+          <input
+            type="checkbox"
+            [checked]="task.completed"
+            (change)="toggleTask(task.id)"
+            class="task-checkbox"
+          >
+          <span class="task-text">{{ task.text }}</span>
+          <button (click)="deleteTask(task.id)" class="delete-btn">
+            x
+          </button>
+        </div>
+      }
+    }
+  </div>
+</div>
+
+<router-outlet />
