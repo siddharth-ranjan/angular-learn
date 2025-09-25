@@ -20,6 +20,9 @@ Thumbs.db
 # Log files
 *.log
 
+# ide files
+.idea/
+
 # NPM debug files
 npm-debug.log*
 
