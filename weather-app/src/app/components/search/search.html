@@ -1,1 +1,15 @@
-<p>search works!</p>
+<!--<p>search works!</p>-->
+<div class="search-container">
+  <label class="location-label">Location:</label>
+  <input
+    class="location-input"
+    [(ngModel)]="location"
+    type="text"
+    (keyup.enter)="search()"
+  >
+  <button
+    class="search-btn"
+    [disabled]="!location().trim()"
+    (click)="search()"
+  >Search</button>
+</div>
