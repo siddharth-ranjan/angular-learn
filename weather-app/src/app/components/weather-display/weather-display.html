@@ -1,1 +1,35 @@
-<p>weather-display works!</p>
+<h1>Ask about different injection</h1>
+@if (weatherService.weatherData(); as weather) {
+
+  <div class="weather-container">
+    <h2>Weather for {{ weather.resolvedAddress }}</h2>
+    <h3>Timezone: {{ weather.timezone }}</h3>
+    <h3>Latitude: {{ weather.latitude }} Longitude: {{ weather.longitude }}</h3>
+
+    @if (weather.days && weather.days.length > 0) {
+      <div class="forecast-container">
+        <h3>{{weather.days.length}}-Day Forecast</h3>
+        @for (day of weather.days; track day.datetime) {
+          <div class="forecast-card">
+            <span class="date">{{ day.datetime }}</span>
+            <span class="conditions">{{ day.conditions }}</span>
+            <span class="description">{{ day.description }}</span>
+            <span class="temp-range">
+              Temperature, Low: {{ day.tempmin }}°C, High: {{ day.tempmax }}°C
+            </span>
+            <span class="feels-like">
+              Feels like, Low: {{ day.feelslikemin }}°C, High: {{ day.feelslikemax }}°C</span>
+            <span class="average">Average- Temp: {{ day.temp }} Feels like: {{ day.feelslike }}</span>
+            <span class="sunrise">Sunrise: {{ day.sunrise }}</span>
+            <span class="sunset">Sunset: {{ day.sunset }}</span>
+          </div>
+        }
+      </div>
+    }
+    @else {
+      <p class="weather-empty">Try searching again!</p>
+    }
+  </div>
+} @else {
+  <p class="empty-state">Search for a location to see the weather.</p>
+}
