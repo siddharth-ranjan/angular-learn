@@ -1,0 +1,53 @@
+@if (movie(); as movie) {
+  <div class="movie-detail-container">
+    <div class="poster-container">
+      <img class="poster" [src]="movie.Poster" [alt]="movie.Title + ' poster'">
+    </div>
+
+    <div class="details-container">
+      <div class="header">
+        <h1 class="title">{{ movie.Title }}</h1>
+        <button
+          class="watchlist-btn"
+          (click)="toggleWatchlistStatus()" [class.in-watchlist]="isInWatchlist()"
+          [title]="isInWatchlist() ? 'Remove from Watchlist' : 'Add to Watchlist'">
+          @if (isInWatchlist()) {
+            <span>✅</span>
+          } @else {
+            <span>⭐</span>
+          }
+        </button>
+      </div>
+
+      <div class="meta-info">
+        <p class="meta">{{ movie.Year }} &bull; {{ movie.Rated }} &bull; {{ movie.Runtime }}</p>
+        <p class="genre">{{ movie.Genre }}</p>
+      </div>
+
+      <div class="plot">
+        <h3>Plot</h3>
+        <p>{{ movie.Plot }}</p>
+      </div>
+
+      <div class="credits">
+        <p><strong>Director:</strong> {{ movie.Director }}</p>
+        <p><strong>Writers:</strong> {{ movie.Writer }}</p>
+        <p><strong>Stars:</strong> {{ movie.Actors }}</p>
+      </div>
+
+      <div class="ratings-container">
+        <h3>Ratings</h3>
+        <div class="ratings-grid">
+          @for (rating of movie.Ratings; track rating.Source) {
+            <div class="rating-item">
+              <span class="rating-value">{{ rating.Value }}</span>
+              <span class="rating-source">{{ rating.Source }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+} @else {
+  <p class="loading-state">Loading movie details...</p>
+}

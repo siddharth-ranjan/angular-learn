@@ -1,0 +1,57 @@
+<div class="search-card">
+  <div class="search-toggle">
+    <button
+      (click)="setSearchMode('title')"
+      [class.active]="searchMode() === 'title'">
+      Search by Title
+    </button>
+    <button
+      (click)="setSearchMode('id')"
+      [class.active]="searchMode() === 'id'">
+      Search by ID
+    </button>
+  </div>
+
+  <div class="search-form-container">
+    @if (searchMode() === 'id') {
+      <div class="search-form">
+        <input
+          class="form-input"
+          [(ngModel)]="movieId"
+          type="text"
+          (keyup.enter)="searchById()"
+          placeholder="Enter movie ID (e.g., tt3896198)"
+        />
+        <button
+          class="search-btn"
+          (click)="searchById()"
+          [disabled]="!movieId().trim()">
+          Search
+        </button>
+      </div>
+    } @else {
+      <div class="search-form title-form">
+        <input
+          class="form-input title-input"
+          [(ngModel)]="title"
+          type="text"
+          placeholder="Movie Title (e.g., Dune)"
+        />
+        <input
+          class="form-input year-input"
+          [(ngModel)]="year"
+          type="number"
+          min="1900"
+          placeholder="Year"
+          (keyup.enter)="searchByTitle()"
+        />
+        <button
+          class="search-btn"
+          (click)="searchByTitle()"
+          [disabled]="!title().trim() || !year() || year() < 1900 || year() > currentYear">
+          Search
+        </button>
+      </div>
+    }
+  </div>
+</div>

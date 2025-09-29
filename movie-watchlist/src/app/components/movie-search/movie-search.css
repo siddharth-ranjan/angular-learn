@@ -1,0 +1,98 @@
+:host {
+  --primary-color: #007bff;
+  --primary-hover: #0056b3;
+  --light-gray: #f0f2f5;
+  --border-color: #ccc;
+  --text-color: #333;
+}
+
+.search-card {
+  max-width: 700px; /* Increased max-width slightly */
+  margin: 2rem auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.search-toggle {
+  display: flex;
+  background-color: var(--light-gray);
+}
+
+.search-toggle button {
+  flex: 1;
+  padding: 1rem;
+  border: none;
+  background: none;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-bottom: 3px solid transparent;
+}
+
+.search-toggle button:hover {
+  background-color: #e9ecef;
+}
+
+.search-toggle button.active {
+  color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
+}
+
+.search-form-container {
+  padding: 1.5rem;
+}
+
+.search-form {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap; /* 👇 KEY CHANGE 1: Allow items to wrap */
+}
+
+.form-input {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  flex-grow: 1; /* 👇 KEY CHANGE 2: Allow inputs to grow */
+  flex-basis: 150px; /* 👇 KEY CHANGE 3: Give inputs a base width */
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+}
+
+/* Specific styling for title input */
+.title-form .title-input {
+  flex-basis: 300px; /* Give the title input a larger base width */
+}
+
+.search-btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  flex-grow: 1; /* Allow the button to grow as well */
+  flex-basis: auto; /* Let it size based on content */
+}
+
+.search-btn:not(:disabled):hover {
+  background-color: var(--primary-hover);
+}
+
+.search-btn:disabled {
+  background-color: #ced4da;
+  cursor: not-allowed;
+}

@@ -1,0 +1,131 @@
+/*
+ * Global variables for easy theme management.
+ * Using CSS variables is a best practice for maintaining a consistent design system.
+ */
+:root {
+  --header-bg: #1a202c; /* A dark, charcoal background */
+  --header-text: #e2e8f0; /* A soft, off-white text color */
+  --accent-color: #007bff; /* A vibrant teal for the button */
+  --accent-hover-color: #0056b3; /* A slightly darker teal for hover */
+  --header-shadow: rgba(0, 0, 0, 0.2);
+}
+
+/*
+ * Main <header> container styling
+ * We use Flexbox to easily align the title and the button.
+ */
+header {
+  display: flex;
+  justify-content: space-between; /* Pushes title to the left and button to the right */
+  align-items: center;          /* Vertically centers items */
+  padding: 1rem 2rem;           /* Generous padding for breathing room (16px top/bottom, 32px left/right) */
+  background-color: var(--header-bg);
+  color: var(--header-text);
+  box-shadow: 0 4px 6px -1px var(--header-shadow); /* Subtle shadow for depth */
+  position: static; /* Makes the header stick to the top on scroll */
+  top: 0;
+  z-index: 1000;
+}
+
+/*
+ * Styling for the <h1> title
+ */
+.global-header {
+  margin: 0; /* Removes the default margin from h1 for precise alignment */
+  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+  font-size: 1.75rem; /* A strong, clear font size */
+  font-weight: 600;
+  letter-spacing: 0.5px; /* Adds a touch of refinement */
+}
+
+/* Styles for the header link */
+.main-header a {
+  /* Removes the default underline from the link */
+  text-decoration: none;
+
+  /* Makes the link's color the same as the surrounding text */
+  color: inherit;
+
+  /* Adds a subtle color change on hover for user feedback */
+  transition: color 0.2s ease-in-out;
+}
+
+.main-header a:hover {
+  color: #0056b3; /* A slightly darker blue for the hover effect */
+}
+
+/* Style for the H1 inside the link */
+.main-header h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #1a2a3a; /* Your desired heading color */
+  margin: 0; /* Removes default margin to prevent layout issues */
+}
+
+/*
+ * Styling for the "Watchlist" button
+ */
+.watchlist-btn {
+  /* Box Model & Sizing */
+  padding: 0.75rem 1.5rem; /* Comfortable padding for a clickable area */
+
+  /* Typography */
+  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  text-decoration: none; /* Important if you change the button to an <a> tag */
+  text-align: center;
+
+  /* Appearance */
+  background-color: #007bff;
+  border: none; /* Removes default browser border */
+  border-radius: 8px; /* Modern rounded corners */
+  cursor: pointer;
+
+  /* Smooth transitions for hover and active states */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/*
+ * Interactive state for the button on mouse hover
+ */
+.watchlist-btn:hover {
+  background-color: #0056b3;;
+  transform: translateY(-2px); /* Lifts the button slightly */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/*
+ * Active state for when the button is being clicked
+ */
+.watchlist-btn:active {
+  transform: translateY(0); /* Pushes the button back down */
+  box-shadow: none; /* Removes the shadow for a "pressed" effect */
+}
+
+.watchlist-btn.active-route {
+  background-color: #f56565; /* A distinct "active" color, like red */
+  color: white;
+  cursor: default; /* Optional: change cursor since you're already on the page */
+  pointer-events: none; /* Optional: disable clicks on the button when active */
+}
+
+/*
+ * A little bit of responsiveness for smaller screens
+ */
+@media (max-width: 600px) {
+  header {
+    padding: 0.75rem 1rem; /* Reduce padding on mobile */
+    flex-direction: column; /* Stack title and button */
+    gap: 0.75rem; /* Add space between them when stacked */
+  }
+
+  .global-header {
+    font-size: 1.5rem; /* Slightly smaller title on mobile */
+  }
+
+  .watchlist-btn {
+    width: 100%; /* Make the button full-width on small screens */
+  }
+}
