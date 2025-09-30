@@ -4,8 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --configuration=production",
-    "vercel-build": "ng build --configuration=production && sed -i \"s/apiKey: .*/apiKey: '$NG_APP_OMDB_API_KEY',/g\" dist/movie-watchlist/browser/environments/environment.prod.js",
+    "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
