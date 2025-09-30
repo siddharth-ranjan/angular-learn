@@ -3,14 +3,14 @@
 
   @if (isLoading()) {
     <p class="loading-state">Loading your movies...</p>
-  } @else if (watchlistData().length > 0) {
+  } @else if (displayWatchlist().length > 0) {
     <div class="movie-grid">
-      @for (movie of watchlistData(); track movie.imdbID) {
-        <div class="movie-card" (click)="navigateToMovie(movie.imdbID)">
-          <img [src]="movie.Poster" [alt]="movie.Title">
+      @for (movie of displayWatchlist(); track movie.id) {
+        <div class="movie-card" (click)="navigateToMovie(movie.id)">
+          <img [src]="movie.poster" [alt]="movie.title">
           <div class="movie-info">
-            <h4>{{ movie.Title }}</h4>
-            <p>{{ movie.Year }}</p>
+            <h4>{{ movie.title }}</h4>
+            <p>{{ movie.year }}</p>
           </div>
         </div>
       }
