@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --configuration=production",
-    "vercel-build": "ng build --configuration=production && sed -i 's/apiKey: .*/apiKey: \\''\"$NG_APP_OMDB_API_KEY\"'\\,/g' dist/browser/environments/environment.prod.js",
+    "vercel-build": "ng build --configuration=production && sed -i \"s/apiKey: .*/apiKey: '$NG_APP_OMDB_API_KEY',/g\" dist/movie-watchlist/browser/environments/environment.prod.js",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
