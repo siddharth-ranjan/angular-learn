@@ -1,4 +1,5 @@
+import {MovieDetails} from './movie-details.interface';
+
 export interface WatchlistItem {
-  id: string;
-  note: string;
+  [id : string]: MovieDetails;
 }
