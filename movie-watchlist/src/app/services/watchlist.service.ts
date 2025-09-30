@@ -1,21 +1,30 @@
-import {inject, Injectable} from '@angular/core';
-import {SearchService} from './search.service';
-import {forkJoin, of} from 'rxjs';
+import {Injectable} from '@angular/core';
+import {WatchlistItem} from '../types/watchlist-item.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class WatchlistService {
-  private searchService: SearchService = inject(SearchService);
 
-  prepareWatchlist(ids: string[]): any {
-    if (!ids || ids.length === 0) {
-      return of([]);
-    }
+  addToWatchlist(watchlist: WatchlistItem) {
+    const watchlistJSON = this.watchlistJSON;
+    watchlistJSON.push(watchlist);
+    this.watchlist(watchlistJSON);
+  }
 
-    const movieRequests = ids.map(id => this.searchService.searchMovieById(id));
+  removeFromWatchlist(movieIndex: number) {
+    const watchlistJSON = this.watchlistJSON;
+    watchlistJSON.splice(movieIndex, 1);
+    this.watchlist(watchlistJSON);
+  }
 
-    return forkJoin(movieRequests);
+  get watchlistJSON(): WatchlistItem[] {
+    const watchlist = localStorage.getItem("watchlist");
+    return watchlist ? JSON.parse(watchlist) : [];
+  }
+
+  watchlist(watchlist: WatchlistItem[]) {
+    localStorage.setItem("watchlist", JSON.stringify(watchlist));
   }
 }
