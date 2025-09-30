@@ -1,6 +1,8 @@
 import {Component, inject, OnInit, signal} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {SearchService} from '../../services/search.service';
+import {WatchlistItem} from '../../types/watchlist-item.interface';
+import {WatchlistService} from '../../services/watchlist.service';
 
 @Component({
   selector: 'app-movie-detail',
@@ -11,6 +13,8 @@ import {SearchService} from '../../services/search.service';
 export class MovieDetail implements OnInit {
   private route = inject(ActivatedRoute);
   private movieService = inject(SearchService);
+  private watchlistService = inject(WatchlistService);
+
   movie = signal<any | null>(null)
   isInWatchlist = signal(false);
   private readonly note = signal<string>('');
@@ -19,7 +23,7 @@ export class MovieDetail implements OnInit {
     const navigationState = history.state;
     const movieId = this.route.snapshot.paramMap.get('id');
 
-    if(navigationState && navigationState['movie']) {
+    if (navigationState && navigationState['movie']) {
       console.log('Received movie data from state.')
       console.log(navigationState['movie']);
       this.movie.set(navigationState['movie']);
@@ -27,7 +31,7 @@ export class MovieDetail implements OnInit {
     } else {
       console.log("No state found, fetching again from API...");
 
-      if(movieId){
+      if (movieId) {
         this.movieService.searchMovieById(movieId).subscribe(data => {
           this.movie.set(data);
           this.checkWatchlistStatus(movieId);
@@ -38,33 +42,39 @@ export class MovieDetail implements OnInit {
 
   private checkWatchlistStatus(movieId: string | null): void {
     if (!movieId) return;
-    const watchlistJSON = localStorage.getItem('watchlist');
-    const watchlist: string[] = watchlistJSON ? JSON.parse(watchlistJSON) : [];
-    this.isInWatchlist.set(watchlist.includes(movieId));
+    const watchlistJSON = this.watchlistService.watchlistJSON;
+
+    this.isInWatchlist.set(watchlistJSON.some(item => movieId in item));
   }
 
   toggleWatchlistStatus() {
     const movieId = this.route.snapshot.paramMap.get('id');
     if (!movieId) return;
 
-    const watchlistJSON = localStorage.getItem('watchlist');
-    let watchlist: string[] = watchlistJSON ? JSON.parse(watchlistJSON) : [];
+    const watchlistJSON = this.watchlistService.watchlistJSON;
 
-    const movieIndex = watchlist.indexOf(movieId);
+    const movieJSON: WatchlistItem = {
+      [movieId]: {
+        title: this.movie()['Title'],
+        year: this.movie()['Year'],
+        poster: this.movie()['Poster'],
+        note: this.note()
+      }
+    };
 
-    if (movieIndex > -1) {
-      // If the movie is in the list, remove it
-      watchlist.splice(movieIndex, 1);
+    console.log(movieJSON);
+
+    const movieIndex = watchlistJSON.findIndex(item => movieId in item);
+
+    if(movieIndex >= 0) {
+      this.watchlistService.removeFromWatchlist(movieIndex);
       this.isInWatchlist.set(false);
       console.log(`Removed ${movieId} from watchlist.`);
     } else {
-      // If the movie is not in the list, add it
-      watchlist.push(movieId);
+      this.watchlistService.addToWatchlist(movieJSON);
       this.isInWatchlist.set(true);
       console.log(`Added ${movieId} to watchlist.`);
     }
 
-    // Save the updated array back to localStorage
-    localStorage.setItem('watchlist', JSON.stringify(watchlist));
   }
 }
