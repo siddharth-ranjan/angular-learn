@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "vercel-deploy-test": {
+    "movie-watchlist": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -56,10 +56,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "vercel-deploy-test:build:production"
+              "buildTarget": "movie-watchlist:build:production"
             },
             "development": {
-              "buildTarget": "vercel-deploy-test:build:development"
+              "buildTarget": "movie-watchlist:build:development"
             }
           },
           "defaultConfiguration": "development"
